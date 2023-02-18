@@ -22,8 +22,9 @@ class PostifixToAFN():
 
     def graficar(self):
         dot = Digraph()
+        print(self.transiciones_splited)
         for i in range(len(self.estados)):
-            if self.estados[i] == 0:
+            if self.estados[i] == self.ef:
                 dot.node(str(self.estados[i]), shape="doublecircle")
             else:
                 dot.node(str(self.estados[i]), shape="circle")
@@ -33,7 +34,7 @@ class PostifixToAFN():
             else:
                 dot.edge(str(transicion[0]), str(
                     transicion[2]), label=transicion[1])
-        dot.render('output/afn', format='png', view=True)
+        dot.render('afn_grafico', format='png', view=True)
 
     def operando(self, caracter):
         if(caracter.isalpha() or caracter == "ε"):
@@ -162,6 +163,29 @@ class PostifixToAFN():
                 self.transiciones_splited.append([c1, "ε", r11])
                 self.transiciones_splited.append([r12, "ε", c2])
                 self.transiciones_splited.append([r22, "ε", c2])
+            # si es cero o una repetición del elemento anterior ?
+            elif i == "?":
+                r1, r2 = stack.pop()
+                counter = counter + 1
+                c1 = counter
+                if c1 not in self.estados:
+                    self.estados.append(c1)
+                counter = counter + 1
+                c2 = counter
+                if c2 not in self.estados:
+                    self.estados.append(c2)
+                self.afn_final.append({})
+                self.afn_final.append({})
+                stack.append([c1, c2])
+                self.afn_final[c1]['ε'] = r1
+                self.afn_final[r2]['ε'] = c2
+                if start == r1:
+                    start = c1
+                if end == r2:
+                    end = c2
+                self.transiciones_splited.append([r2, "ε", r1])
+                self.transiciones_splited.append([r2, "ε", c2])
+                self.transiciones_splited.append([c1, "ε", c2])
 
         # asignacion de estados finales e iniciales
         self.e0 = start
