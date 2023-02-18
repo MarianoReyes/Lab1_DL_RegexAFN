@@ -22,7 +22,6 @@ class PostifixToAFN():
 
     def graficar(self):
         dot = Digraph()
-        print(self.transiciones_splited)
         for i in range(len(self.estados)):
             if self.estados[i] == self.ef:
                 dot.node(str(self.estados[i]), shape="doublecircle")
