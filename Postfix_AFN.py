@@ -231,4 +231,5 @@ class PostifixToAFN():
 
             print("\nArchivo de AFN escrito con éxito")
 
+        # SI NO SE DESEA GRAFICAR POR PROBLEMAS CON LIBRERIA QUITAR LA LINEA SIGUIENTE
         self.graficar()  # imagen del AFN
