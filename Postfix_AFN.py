@@ -162,7 +162,7 @@ class PostifixToAFN():
                 self.transiciones_splited.append([c1, "ε", r11])
                 self.transiciones_splited.append([r12, "ε", c2])
                 self.transiciones_splited.append([r22, "ε", c2])
-            # si es cero o una repetición del elemento anterior ?
+            # si es una vez o ninguna
             elif i == "?":
                 r1, r2 = stack.pop()
                 counter = counter + 1
@@ -176,17 +176,18 @@ class PostifixToAFN():
                 self.afn_final.append({})
                 self.afn_final.append({})
                 stack.append([c1, c2])
-                self.afn_final[c1]['ε'] = r1
-                self.afn_final[r2]['ε'] = c2
+                self.afn_final[c1]["ε"] = r1
+                self.afn_final[r2]["ε"] = c2
                 if start == r1:
                     start = c1
                 if end == r2:
                     end = c2
-                self.transiciones_splited.append([r2, "ε", r1])
-                self.transiciones_splited.append([r2, "ε", c2])
+                self.transiciones_splited.append([c1, "ε", r1])
                 self.transiciones_splited.append([c1, "ε", c2])
+                self.transiciones_splited.append([r2, "ε", c2])
+                self.transiciones_splited.append([r2, "ε", r1])
 
-        # asignacion de estados finales e iniciales
+                # asignacion de estados finales e iniciales
         self.e0 = start
         self.ef = end
 
