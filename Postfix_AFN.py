@@ -106,7 +106,7 @@ class PostifixToAFN():
                     self.transiciones_splited.append([c1, "ε", c2])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida")
+                    print("\nExpresión Regex inválida, * mal aplicado")
             # si es una cerradura positiva
             elif i == '+':
                 try:
@@ -133,7 +133,7 @@ class PostifixToAFN():
                     self.transiciones_splited.append([c1, "ε", c2])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida")
+                    print("\nExpresión Regex inválida, + mal aplicado")
             # si es una concatenacion
             elif i == '.':
                 try:
@@ -148,7 +148,7 @@ class PostifixToAFN():
                     self.transiciones_splited.append([r22, "ε", r11])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida")
+                    print("\nExpresión Regex inválida, . mal aplicado")
             # si es un or
             elif i == "|":
                 try:
@@ -179,7 +179,7 @@ class PostifixToAFN():
                     self.transiciones_splited.append([r22, "ε", c2])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida")
+                    print("\nExpresión Regex inválida, | mal aplicado")
             # si es una vez o ninguna
             elif i == "?":
                 try:
@@ -207,7 +207,7 @@ class PostifixToAFN():
                     self.transiciones_splited.append([r2, "ε", r1])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida")
+                    print("\nExpresión Regex inválida, ? mal aplicado")
 
         # asignacion de estados finales e iniciales
         self.e0 = start
