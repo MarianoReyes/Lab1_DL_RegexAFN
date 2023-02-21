@@ -28,3 +28,5 @@ Es necesario tener graphviz instalado en la computadora y agregado al PATH en la
 El ejemplo usado para los archivos generados en el repositorio fue:
 
 - (e|a)sd\*(a?)
+
+**NO SE ACEPTAN NUMEROS, SOLO LETRAS**
