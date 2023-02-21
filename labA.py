@@ -1,6 +1,7 @@
 """
-Generador de Automatas AFN de una REGEX
-José Mariano Reyes 20074
+AFN de una REGEX
+José Mariano Reyes 
+20074
 """
 
 from Regex_Postfix import convertExpression

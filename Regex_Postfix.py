@@ -1,3 +1,7 @@
+'''
+Regex a Postfix
+'''
+
 import time
 import timeit
 

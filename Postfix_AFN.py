@@ -1,5 +1,5 @@
 '''
-CLASE DEDICADA A LA CONVERSION DE UNA EXPRESION POSTFIX A AFN
+Postfix a AFN
 '''
 
 from re import S
