@@ -148,7 +148,8 @@ class PostifixToAFN():
                     self.transiciones_splited.append([r22, "ε", r11])
                 except:
                     self.error = True
-                    print("\nExpresión Regex inválida, . mal aplicado")
+                    print(
+                        "\nExpresión Regex inválida, concatenación o paréntesis mal aplicados")
             # si es un or
             elif i == "|":
                 try:
