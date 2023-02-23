@@ -43,12 +43,11 @@ class PostifixToAFN():
             return False
 
     def reemplazar_interrogacion(self):
-        self.postfix = self.postfix.replace('?', 'ε|')
+        self.postfix = self.postfix.replace('?', 'ε?')
 
     def conversion(self):
         print("\nPostfix: ", self.postfix)
-        # self.reemplazar_interrogacion()
-        print("Postfix: ", self.postfix)
+        self.reemplazar_interrogacion()
         print("\nConvirtiendo de Postfix a AFN...")
         simbolos = []
         postfix = self.postfix
@@ -62,7 +61,6 @@ class PostifixToAFN():
         stack = []
         start = 0
         end = 1
-        end2 = 1
 
         counter = -1
         c1 = 0
@@ -199,48 +197,23 @@ class PostifixToAFN():
                 c2 = counter
                 if c2 not in self.estados:
                     self.estados.append(c2)
-                counter = counter+1
-                c3 = counter
-                if c3 not in self.estados:
-                    self.estados.append(c3)
-                counter = counter+1
-                c4 = counter
-                if c4 not in self.estados:
-                    self.estados.append(c4)
-
-                self.afn_final.append({})
-                self.afn_final.append({})
                 self.afn_final.append({})
                 self.afn_final.append({})
 
                 r11, r12 = stack.pop()
-                r21, r22 = [c3, c4]
-                stack.append([c3, c4])
-
-                # print('\nc1 : ', c1)
-                # print('c2 : ', c2)
-                # print('c3 : ', c3)
-                # print('c4 : ', c4)
-                # print('r11: ', r11)
-                # print('r12: ', r12)
-                # print('r21: ', r21)
-                # print('r22: ', r22)
-
-                self.afn_final[c1]['ε'] = c2
-                self.afn_final[c3]['ε'] = (r11, c1)
-                self.afn_final[r12]['ε'] = r22
-                self.afn_final[c2]['ε'] = r22
-
+                r21, r22 = stack.pop()
+                stack.append([c1, c2])
+                self.afn_final[c1]['ε'] = (r21, r11)
+                self.afn_final[r12]['ε'] = c2
+                self.afn_final[r22]['ε'] = c2
                 if start == r11 or start == r21:
-                    start = c3
+                    start = c1
                 if end == r22 or end == r12:
-                    end = c4
-
-                self.transiciones_splited.append([c1, "ε", c2])
-                self.transiciones_splited.append([c3, "ε", r11])
-                self.transiciones_splited.append([c3, "ε", c1])
-                self.transiciones_splited.append([r12, "ε", r22])
-                self.transiciones_splited.append([c2, "ε", r22])
+                    end = c2
+                self.transiciones_splited.append([c1, "ε", r21])
+                self.transiciones_splited.append([c1, "ε", r11])
+                self.transiciones_splited.append([r12, "ε", c2])
+                self.transiciones_splited.append([r22, "ε", c2])
 
         # asignacion de estados finales e iniciales
         self.e0 = start

@@ -11,7 +11,7 @@ class convertExpression:
         # This array is used a stack
         self.array = []
         # precedencia setting
-        self.precedencia = {'?': 3, '|': 1, '.': 1, '*': 2, '+': 2}
+        self.precedencia = {'|': 1, '.': 1, '?': 2, '*': 2, '+': 2}
         # Aqui se almacena el resultado final
         self.output = []
         self.res = ""
@@ -35,6 +35,8 @@ class convertExpression:
             if regex[i] == "*" and regex[i+1] not in simbolos:
                 new_regex += "."
             if regex[i] == "+" and regex[i+1] not in simbolos:
+                new_regex += "."
+            if regex[i] == "?" and regex[i+1] not in simbolos:
                 new_regex += "."
         new_regex += regex[length-1]
 
@@ -68,7 +70,7 @@ class convertExpression:
 
     # Funcion para chequear si es un operando/letra
     def operando(self, caracter):
-        if(caracter.isalnum() or caracter == "ε"):
+        if(caracter.isalnum() or caracter == "ε" or caracter == "?"):
             return True
         else:
             return False
@@ -102,38 +104,31 @@ class convertExpression:
             exp = self.addPuntos(exp)
             # se itera sobre cada caracter de la expresion
             for i in exp:
-
                 # si el caracter es un operando/letra, añadirlo al output
                 if self.operando(i):
                     if self.peek() == "*" or self.peek() == "+" or self.peek() == "?":
                         self.output.append(self.pop())
                     self.output.append(i)
-
                 # si es un "(" se manda al stack
                 elif i == '(':
                     self.push(i)
-
-                # si es un ")" sacar todo del stack
+                # si es un ")" sacar todo del stack hasta encontrar un "("
                 elif i == ')':
-                    while((not self.vacio()) and
-                          self.peek() != '('):
+                    while((not self.vacio()) and self.peek() != '('):
                         a = self.pop()
                         self.output.append(a)
                     if (not self.vacio() and self.peek() != '('):
                         return -1
                     else:
                         self.pop()
-
                 # cuando se encuentra un operador
                 else:
                     while(not self.vacio() and self.revision(i)):
                         self.output.append(self.pop())
                     self.push(i)
-
             # sacar todos los operadores del stack
             while not self.vacio():
                 self.output.append(self.pop())
-
             self.res = "".join(self.output)
         else:
-            print("\nNo coinciden el número de paréntesis de aprectura y de cerradura.")
+            print("\nNo coinciden el número de paréntesis de apertura y de cierre.")
