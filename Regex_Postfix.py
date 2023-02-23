@@ -2,9 +2,6 @@
 Regex a Postfix
 '''
 
-import time
-import timeit
-
 
 class convertExpression:
     # Constructor to initialize the class variables
@@ -14,7 +11,7 @@ class convertExpression:
         # This array is used a stack
         self.array = []
         # precedencia setting
-        self.precedencia = {'?': 1, '|': 1, '.': 1, '*': 2, '+': 2}
+        self.precedencia = {'?': 3, '|': 1, '.': 1, '*': 2, '+': 2}
         # Aqui se almacena el resultado final
         self.output = []
         self.res = ""
@@ -85,42 +82,58 @@ class convertExpression:
         except KeyError:
             return False
 
+    # Funcion para chequear parentesis
+    def verificar_par(self, exp):
+        count = 0
+        for char in exp:
+            if char == '(':
+                count += 1
+            elif char == ')':
+                count -= 1
+                if count < 0:
+                    return False
+        return count == 0
+
     # Funcion principal que retorna la expresion regular a postfix
     def RegexToPostfix(self, exp):
         print("\nConvirtiendo Regex a Postfix...")
-        exp = self.addPuntos(exp)
-        # se itera sobre cada caracter de la expresion
-        for i in exp:
+        self.ver = self.verificar_par(exp)
+        if self.ver == True:
+            exp = self.addPuntos(exp)
+            # se itera sobre cada caracter de la expresion
+            for i in exp:
 
-            # si el caracter es un operando/letra, añadirlo al output
-            if self.operando(i):
-                if self.peek() == "*":
-                    self.output.append(self.pop())
-                self.output.append(i)
+                # si el caracter es un operando/letra, añadirlo al output
+                if self.operando(i):
+                    if self.peek() == "*":
+                        self.output.append(self.pop())
+                    self.output.append(i)
 
-            # si es un "(" se manda al stack
-            elif i == '(':
-                self.push(i)
+                # si es un "(" se manda al stack
+                elif i == '(':
+                    self.push(i)
 
-            # si es un ")" sacar todo del stack
-            elif i == ')':
-                while((not self.vacio()) and
-                      self.peek() != '('):
-                    a = self.pop()
-                    self.output.append(a)
-                if (not self.vacio() and self.peek() != '('):
-                    return -1
+                # si es un ")" sacar todo del stack
+                elif i == ')':
+                    while((not self.vacio()) and
+                          self.peek() != '('):
+                        a = self.pop()
+                        self.output.append(a)
+                    if (not self.vacio() and self.peek() != '('):
+                        return -1
+                    else:
+                        self.pop()
+
+                # cuando se encuentra un operador
                 else:
-                    self.pop()
+                    while(not self.vacio() and self.revision(i)):
+                        self.output.append(self.pop())
+                    self.push(i)
 
-            # cuando se encuentra un operador
-            else:
-                while(not self.vacio() and self.revision(i)):
-                    self.output.append(self.pop())
-                self.push(i)
+            # sacar todos los operadores del stack
+            while not self.vacio():
+                self.output.append(self.pop())
 
-        # sacar todos los operadores del stack
-        while not self.vacio():
-            self.output.append(self.pop())
-
-        self.res = "".join(self.output)
+            self.res = "".join(self.output)
+        else:
+            print("\nNo coinciden el número de paréntesis de aprectura y de cerradura.")

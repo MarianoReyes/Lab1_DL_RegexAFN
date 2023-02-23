@@ -19,12 +19,13 @@ if __name__ == '__main__':
 
     # llamada de funcion para convertir a postfix
     conversion.RegexToPostfix(exp)
+    if conversion.ver == True:
+        postfix = conversion.res
 
-    postfix = conversion.res
-    print("\nPostfix: ", postfix)
+        # instancia de clase para convertir a AFN
+        conversionAFN = PostifixToAFN(postfix)
 
-    # instancia de clase para convertir a AFN
-    conversionAFN = PostifixToAFN(postfix)
-
-    # llamada a metodo para convertir afn
-    conversionAFN.conversion()
+        # llamada a metodo para convertir afn
+        conversionAFN.conversion()
+    else:
+        print("\nSe ha finalizado el programa por una mala expresión Regex")

@@ -37,12 +37,18 @@ class PostifixToAFN():
         dot.render('afn_grafico', format='png', view=True)
 
     def operando(self, caracter):
-        if(caracter.isalpha() or caracter == "ε"):
+        if(caracter.isalpha() or caracter.isnumeric() or caracter == "ε"):
             return True
         else:
             return False
 
+    def reemplazar_interrogacion(self):
+        self.postfix = self.postfix.replace('?', 'ε|')
+
     def conversion(self):
+        print("\nPostfix: ", self.postfix)
+        self.reemplazar_interrogacion()
+        print("Postfix: ", self.postfix)
         print("\nConvirtiendo de Postfix a AFN...")
         simbolos = []
         postfix = self.postfix
@@ -122,7 +128,7 @@ class PostifixToAFN():
                     self.afn_final.append({})
                     self.afn_final.append({})
                     stack.append([c1, c2])
-                    self.afn_final[r2]['ε'] = r1
+                    self.afn_final[r2]['ε'] = (r1, c2)
                     if start == r1:
                         start = c1
                     if end == r2:
@@ -130,10 +136,10 @@ class PostifixToAFN():
                     self.transiciones_splited.append([r2, "ε", r1])
                     self.transiciones_splited.append([r2, "ε", c2])
                     self.transiciones_splited.append([c1, "ε", r1])
-                    self.transiciones_splited.append([c1, "ε", c2])
                 except:
                     self.error = True
                     print("\nExpresión Regex inválida, + mal aplicado")
+
             # si es una concatenacion
             elif i == '.':
                 try:
@@ -181,34 +187,6 @@ class PostifixToAFN():
                 except:
                     self.error = True
                     print("\nExpresión Regex inválida, | mal aplicado")
-            # si es una vez o ninguna
-            elif i == "?":
-                try:
-                    r1, r2 = stack.pop()
-                    counter = counter + 1
-                    c1 = counter
-                    if c1 not in self.estados:
-                        self.estados.append(c1)
-                    counter = counter + 1
-                    c2 = counter
-                    if c2 not in self.estados:
-                        self.estados.append(c2)
-                    self.afn_final.append({})
-                    self.afn_final.append({})
-                    stack.append([c1, c2])
-                    self.afn_final[c1]["ε"] = r1
-                    self.afn_final[r2]["ε"] = c2
-                    if start == r1:
-                        start = c1
-                    if end == r2:
-                        end = c2
-                    self.transiciones_splited.append([c1, "ε", r1])
-                    self.transiciones_splited.append([c1, "ε", c2])
-                    self.transiciones_splited.append([r2, "ε", c2])
-                    self.transiciones_splited.append([r2, "ε", r1])
-                except:
-                    self.error = True
-                    print("\nExpresión Regex inválida, ? mal aplicado")
 
         # asignacion de estados finales e iniciales
         self.e0 = start
