@@ -30,6 +30,8 @@ class convertExpression:
                 new_regex += "."
             if regex[i] == "*" and regex[i+1] == "(":
                 new_regex += "."
+            if regex[i] == "?" and regex[i+1] == "(":
+                new_regex += "."
             if regex[i] == ")" and regex[i+1] not in simbolos:
                 new_regex += "."
             if regex[i] == "*" and regex[i+1] not in simbolos:
@@ -70,7 +72,7 @@ class convertExpression:
 
     # Funcion para chequear si es un operando/letra
     def operando(self, caracter):
-        if(caracter.isalnum() or caracter == "ε" or caracter == "?"):
+        if(caracter.isalnum() or caracter == "ε"):
             return True
         else:
             return False

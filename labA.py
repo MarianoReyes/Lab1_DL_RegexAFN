@@ -21,7 +21,6 @@ if __name__ == '__main__':
     conversion.RegexToPostfix(exp)
     if conversion.ver == True:
         postfix = conversion.res
-        #postfix = '0?1??0*'
 
         # instancia de clase para convertir a AFN
         conversionAFN = PostifixToAFN(postfix)
