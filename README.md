@@ -21,7 +21,7 @@ Programa encargado de implementar la conversión de una expresión Regex a AFN p
 
 ## Observaciones
 
-Es necesario tener graphviz instalado en la computadora y agregado al PATH en las variables de entorno. Para obviar la implementación gráfica remover la linea 258 del archivo Postfix_AFN.py
+Es necesario tener graphviz instalado en la computadora y agregado al PATH en las variables de entorno. Para obviar la implementación gráfica remover la linea 264 del archivo Postfix_AFN.py
 
 - self.graficar() # imagen del AFN
 
@@ -29,4 +29,4 @@ El ejemplo usado para los archivos generados en el repositorio fue:
 
 - 0?(1?)?0\*
 
-**NO SE ACEPTAN NUMEROS, SOLO LETRAS**
+**EN LA REGEX NO VAN PUNTOS DE CONCATENACIÓN, LOS AGREGA AUTOMÁTICAMENTE**
