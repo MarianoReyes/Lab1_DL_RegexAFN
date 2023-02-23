@@ -68,7 +68,7 @@ class convertExpression:
 
     # Funcion para chequear si es un operando/letra
     def operando(self, caracter):
-        if(caracter.isalpha() or caracter == "ε"):
+        if(caracter.isalnum() or caracter == "ε"):
             return True
         else:
             return False
@@ -105,7 +105,7 @@ class convertExpression:
 
                 # si el caracter es un operando/letra, añadirlo al output
                 if self.operando(i):
-                    if self.peek() == "*":
+                    if self.peek() == "*" or self.peek() == "+" or self.peek() == "?":
                         self.output.append(self.pop())
                     self.output.append(i)
 
