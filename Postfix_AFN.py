@@ -155,7 +155,7 @@ class PostifixToAFN():
                 except:
                     self.error = True
                     print(
-                        "\nExpresión Regex inválida, concatenación o paréntesis mal aplicados")
+                        "\nExpresión Regex inválida, concatenación mal aplicada o operando inválido.")
             # si es un or
             elif i == "|":
                 try:
